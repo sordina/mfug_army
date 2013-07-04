@@ -9,3 +9,15 @@
 .gist .gist-meta {
 	display: none !important;
 }
+
+.left {
+	text-align: left;
+}
+
+.red {
+	background: red;
+}
+
+.green {
+	background: green;
+}

@@ -3,8 +3,8 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>GHC Extensions - Turbo Haskell</title>
-		<meta name="description" content="GHC Extensions - Turbo Haskell - A talk on some GHC Extensions">
+		<title>Haskell Army - Commando and Conscript</title>
+		<meta name="description" content="Haskell Army - Commando and Conscript">
 		<meta name="author" content="Lyndon Maydwell">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -26,458 +26,351 @@
 			<div class="slides">
 
 				<section>
-					<h1>GHC Extensions</h1>
-					<h3 class="fragment"> &gt;&gt;&gt; Turbo Haskell</h3>
+					<h1>Haskell Army</h1>
+					<h3 class="fragment"> &gt;&gt;&gt; Commando and Conscript</h3>
 					<br>
 					<br>
 					<div class="fragment">
 						<p> <small>Created by Lyndon Maydwell (<a href="mailto:maydwell@gmail.com">maydwell@gmail.com</a>) </small> </p>
-						<p> <small>Presentation: <a href="http://sordina.github.io/mfug_ghc_extensions">http://sordina.github.io/mfug_ghc_extensions</a>
+						<p> <small>Presentation: <a href="http://sordina.github.io/mfug_army">http://sordina.github.io/mfug_army</a>
 							(presented with <a href="http://lab.hakim.se/reveal-js">reveal.js</a>)</small> </p>
-						<p> <small>Github: <a href="https://github.com/sordina/mfug_ghc_extensions">https://github.com/sordina/mfug_ghc_extensions</a></small> </p>
+						<p> <small>Github: <a href="https://github.com/sordina/mfug_army">https://github.com/sordina/mfug_army</a></small> </p>
 					</div>
 				</section>
 
 				<section>
 					<section>
-						<h2> Overview </h2>
+						<h2>What's all this then?</h2>
 
-						<p> As everyone knows - Haskell means GHC, and GHC is only worth
-						using if you turn on "ghc --supported-extensions". </p>
+						<br />
+						<br />
+						<p class="fragment"> Just writing some real-world code in Haskell <p>
+						<p class="fragment"> Nothing drastic <p>
+					</section>
 
-						<br>
+					<section>
+						<h2>But what did you done?</h2>
 
-	<pre><code>lyndon@endpin ~ ghc --supported-extensions | sed 's/^/-X/' | xargs ghci
-	ghc: panic! (the 'impossible' happened)</code></pre>
+						<div class="fragment">
+							<p> <small> I wanted to create something similar to Watch [1], </small> </p>
+							<p> <small> with advanced features like Ruby's Guard [2] ... </small> </p>
+							<p> <small> but without any language dependencies.  Just plain binaries... </small> </p>
+							<p> <small> decoupled into cooperating programs. </small> </p>
 
-						<br>
-						<p> But what are the GHC extensions and why should I (ab)use them? </p>
+							<blockquote>
+								<small>
+								<ol>
+									<li><a href="http://en.wikipedia.org/wiki/Watch_(Unix)">http://en.wikipedia.org/wiki/Watch_(Unix)</a></li>
+									<li><a href="https://github.com/guard/guard">https://github.com/guard/guard</a></li>
+								</ol>
+								</small>
+							</blockquote>
+						</div>
+					</section>
 
-						<br>
-						<p>
-							This talk will cover a few of the extensions defined by the
-						</p>
+					<section>
+						<div style="text-align: left;">
+								<code>~/Documents/Code echo {Conscript,Commando}/*.hs \
+									<br />| xargs -n 1 echo \
+									<br />| grep -v Setup \
+									<br />| xargs cat
+									<br />| wc -l
+								</code>
+						</div>
+						<h2 class="fragment">145</h2>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>The UNIX Philosophy</h2>
+
+						<p><a href="http://en.wikipedia.org/wiki/Unix_philosophy">http://en.wikipedia.org/wiki/Unix_philosophy</a></p>
+
 						<blockquote>
-							Glorious Glasgow Compilation System.
+							<ul>
+								<li>Small is beautiful.</li>
+								<li>Make each program do one thing well.</li>
+								<li>Build a prototype as soon as possible.</li>
+								<li>Choose portability over efficiency.</li>
+								<li>Store data in flat text files.</li>
+								<li>Use software leverage to your advantage.</li>
+								<li>Use shell scripts to leverage and port.</li>
+								<li>Avoid captive user interfaces.</li>
+								<li>Make every program a filter.</li>
+							</ul>
 						</blockquote>
 					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1> Commando </h1>
+						<img src="http://sordina.binaries.s3.amazonaws.com/commando.png" />
+						<p><a href="https://github.com/sordina/Commando">github.com/sordina/Commando</a></p>
+					</section>
 
 					<section>
-						<pre><code>lyndon@endpin ~ ghc --supported-extensions</code></pre>
-						<p>...</p>
-<pre style="max-height: 80%; overflow: scroll;"><code>Haskell98
-Haskell2010
-Unsafe
-Trustworthy
-Safe
-CPP
-NoCPP
-PostfixOperators
-NoPostfixOperators
-TupleSections
-NoTupleSections
-PatternGuards
-NoPatternGuards
-UnicodeSyntax
-NoUnicodeSyntax
-MagicHash
-NoMagicHash
-PolymorphicComponents
-NoPolymorphicComponents
-ExistentialQuantification
-NoExistentialQuantification
-KindSignatures
-NoKindSignatures
-EmptyDataDecls
-NoEmptyDataDecls
-ParallelListComp
-NoParallelListComp
-TransformListComp
-NoTransformListComp
-MonadComprehensions
-NoMonadComprehensions
-ForeignFunctionInterface
-NoForeignFunctionInterface
-UnliftedFFITypes
-NoUnliftedFFITypes
-InterruptibleFFI
-NoInterruptibleFFI
-CApiFFI
-NoCApiFFI
-GHCForeignImportPrim
-NoGHCForeignImportPrim
-LiberalTypeSynonyms
-NoLiberalTypeSynonyms
-Rank2Types
-NoRank2Types
-RankNTypes
-NoRankNTypes
-ImpredicativeTypes
-NoImpredicativeTypes
-TypeOperators
-NoTypeOperators
-ExplicitNamespaces
-NoExplicitNamespaces
-RecursiveDo
-NoRecursiveDo
-DoRec
-NoDoRec
-Arrows
-NoArrows
-ParallelArrays
-NoParallelArrays
-TemplateHaskell
-NoTemplateHaskell
-QuasiQuotes
-NoQuasiQuotes
-ImplicitPrelude
-NoImplicitPrelude
-RecordWildCards
-NoRecordWildCards
-NamedFieldPuns
-NoNamedFieldPuns
-RecordPuns
-NoRecordPuns
-DisambiguateRecordFields
-NoDisambiguateRecordFields
-OverloadedStrings
-NoOverloadedStrings
-GADTs
-NoGADTs
-GADTSyntax
-NoGADTSyntax
-ViewPatterns
-NoViewPatterns
-TypeFamilies
-NoTypeFamilies
-BangPatterns
-NoBangPatterns
-MonomorphismRestriction
-NoMonomorphismRestriction
-NPlusKPatterns
-NoNPlusKPatterns
-DoAndIfThenElse
-NoDoAndIfThenElse
-RebindableSyntax
-NoRebindableSyntax
-ConstraintKinds
-NoConstraintKinds
-PolyKinds
-NoPolyKinds
-DataKinds
-NoDataKinds
-InstanceSigs
-NoInstanceSigs
-MonoPatBinds
-NoMonoPatBinds
-ExplicitForAll
-NoExplicitForAll
-AlternativeLayoutRule
-NoAlternativeLayoutRule
-AlternativeLayoutRuleTransitional
-NoAlternativeLayoutRuleTransitional
-DatatypeContexts
-NoDatatypeContexts
-NondecreasingIndentation
-NoNondecreasingIndentation
-RelaxedLayout
-NoRelaxedLayout
-TraditionalRecordSyntax
-NoTraditionalRecordSyntax
-LambdaCase
-NoLambdaCase
-MultiWayIf
-NoMultiWayIf
-MonoLocalBinds
-NoMonoLocalBinds
-RelaxedPolyRec
-NoRelaxedPolyRec
-ExtendedDefaultRules
-NoExtendedDefaultRules
-ImplicitParams
-NoImplicitParams
-ScopedTypeVariables
-NoScopedTypeVariables
-PatternSignatures
-NoPatternSignatures
-UnboxedTuples
-NoUnboxedTuples
-StandaloneDeriving
-NoStandaloneDeriving
-DeriveDataTypeable
-NoDeriveDataTypeable
-DeriveFunctor
-NoDeriveFunctor
-DeriveTraversable
-NoDeriveTraversable
-DeriveFoldable
-NoDeriveFoldable
-DeriveGeneric
-NoDeriveGeneric
-DefaultSignatures
-NoDefaultSignatures
-TypeSynonymInstances
-NoTypeSynonymInstances
-FlexibleContexts
-NoFlexibleContexts
-FlexibleInstances
-NoFlexibleInstances
-ConstrainedClassMethods
-NoConstrainedClassMethods
-MultiParamTypeClasses
-NoMultiParamTypeClasses
-FunctionalDependencies
-NoFunctionalDependencies
-GeneralizedNewtypeDeriving
-NoGeneralizedNewtypeDeriving
-OverlappingInstances
-NoOverlappingInstances
-UndecidableInstances
-NoUndecidableInstances
-IncoherentInstances
-NoIncoherentInstances
-PackageImports
-NoPackageImports
-</code></pre>
+						<h2> What is Commando? </h2>
+						<ul>
+							<li class="fragment">Watch a directory</li>
+							<li class="fragment">Perform an action when files change</li>
+							<li class="fragment">Simple right?</li>
+						</ul>
+					</section>
 
+					<section>
+						<iframe width="420" height="315" src="http://www.youtube.com/embed/9cH-jQ83Mg4" frameborder="0" allowfullscreen></iframe>
+					</section>
+
+					<section>
+						<h2>Commando's Arsenal</h2>
+						<br />
+						<code><pre>
+				build-depends:
+					base,
+					text,
+					system-filepath,
+					<span style="background:green;">optparse-applicative,</span>
+					system-fileio,
+					<span style="background:red;"  >fsnotify &gt;= 0.0.13,</span>
+					process
+						</pre></code>
+					</section>
+
+					<section>
+						<h2>FSNotify</h2>
+						<p><a href="https://github.com/mdittmer/hfsnotify">github.com/mdittmer/hfsnotify</a></p>
+						<br />
+						<ul>
+							<li class="fragment">Cross-Platform filesystem-notification project</li>
+							<li class="fragment">Developed as a Google Summer of Code Project</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Optparse-Applicative</h2>
+						<p><a href="https://github.com/pcapriotti/optparse-applicative">github.com/pcapriotti/optparse-applicative</a></p>
+						<br />
+						<ul>
+							<li class="fragment">Composable (command-line) options parsing library</li>
+							<li class="fragment">Applicative interface</li>
+							<li class="fragment">Pure and impure top-level interfaces(!)</li>
+						</ul>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>Q: What is Haskell?</h2>
-						<div class="fragment">
-							<br>
-							<h2>A:</h2>
-							<blockquote>I already know that. <br> It was a prerequisite for attending this talk.</blockquote>
-						</div>
-						<div class="fragment">
-							<br>
-							<h2>But did you know...</h2>
+						<h1> Conscript </h1>
+						<img src="http://sordina.binaries.s3.amazonaws.com/conscript.png" />
+						<p><a href="https://github.com/sordina/Conscript">github.com/sordina/Conscript</a></p>
+					</section>
+
+					<section>
+						<h2>What is Conscript? </h2>
+						<ul>
+							<li class="fragment">Run a command</li>
+							<li class="fragment">(Re)start the command on lines of STDIN</li>
+							<li class="fragment">Simple right?</li>
+						</ul>
+					</section>
+
+					<section>
+						<iframe width="420" height="315" src="http://www.youtube.com/embed/sUEBwzhDC4M" frameborder="0" allowfullscreen></iframe>
+					</section>
+
+					<section>
+						<h2>Conscript's Rifle</h2>
+						<br />
+						<code><pre>
+				build-depends:
+					base ==4.6.*,
+					<span style="background: green;">process ==1.1.*</span>
+						</pre></code>
+					</section>
+				</section>
+
+        <section>
+          <h1> Neat! </h1>
+          <h2 class="fragment"> Now show me the codez! </h2>
+        </section>
+
+				<section>
+					<section>
+						<h1> Optparse </h1>
+						<h1> Applicative </h1>
+          </section>
+					
+					<section>
+						<h2> Parser Definition </h2>
+
+						<div class="left">
+							<code>
+								<div class="fragment">
+									import Options.Applicative <br />
+									import Data.Monoid ((<>)) <br />
+									<br />
+								</div>
+								<div class="fragment">
+									quietFlag = short 'q' <br />
+									quietHelp = help "silence the output" <br />
+									quietOption = switch ( quietFlag &lt;&gt; quietHelp ) <br />
+									<br />
+								</div>
+								<div class="fragment">
+									data Options = Opts {quiet :: Bool} <br />
+									<br />
+								</div>
+								<div class="fragment">
+									optParser :: Parser Options <br />
+									optParser = Opts <$> quietOption <br />
+								</div>
+							</code>
 						</div>
 					</section>
+
 					<section>
-						<h3>That there are official versions of the Haskell language?</h3>
-						<p> <small> <a href="http://en.wikipedia.org/wiki/Haskell_(programming_language)"> http://en.wikipedia.org/wiki/Haskell_(programming_language) </a> </small> </p>
+						<h2> Pure Usage </h2>
+
+            <!--
+      optParser :: Parser Options
+      optParser = Opts &lt;$&gt; quietOption
+        where quietFlag   = short 'q'
+              quietHelp   = help "silence the output"
+              quietOption = switch ( quietFlag &lt;&gt; quietHelp )
+              -->
+
+						<div class="left fragment">
+								<code>
+									<pre>
+      import Options.Applicative
+      import Data.Monoid (mempty)
+      import Options.Applicative.Types (ParserPrefs)
+
+      data Options = Opts {quiet :: Bool} deriving Show
+
+      pureParser :: (Parser a) -&gt; [String] -&gt; Maybe a
+      pureParser parser = eitherToMaybe . execParserPure preferences information
+        where information   = (info parser mempty)
+              preferences   = prefs mempty
+              eitherToMaybe = either (const Nothing) Just
+
+      main :: IO ()
+      main = do print $ pureParser optParser (words "-q")
+                print $ pureParser optParser (words "I do what I want!")
+									</pre>
+								</code>
+						</div>
+					</section>
+
+					<section>
+						<h2> Impure Usage </h2>
+
+						<div class="left fragment">
+							<code>
+								main :: IO () <br />
+								main = execParser
+								<br /> &nbsp;&nbsp; (info (helper &lt;*&gt; options) mempty)
+								<br /> &nbsp;&nbsp; &gt;&gt;= start <br />
+								<br />
+								start :: Options -&gt; IO () <br />
+								start = ...
+							</code>
+						</div>
+					</section>
+
+					<section>
+						<h2> Any freebies? </h2>
+
+						<div class="left fragment">
+							<code>
+								<small>
+									lyndon@endpin ~ commando --help
+									<br /> Usage: commando [COMMAND] [-q|--quiet] [-c|--consumer] [-i|--stdin] [-p|--persist] [DIRECTORY]
+									<br />
+									<br /> Available options:
+									<br /> &nbsp;&nbsp;  -h,--help                Show this help text
+									<br /> &nbsp;&nbsp;  COMMAND                  Command run on events
+									<br /> &nbsp;&nbsp;  -q,--quiet               Hide non-essential output
+									<br /> &nbsp;&nbsp;  -c,--consumer            Pass events as argument to command
+									<br /> &nbsp;&nbsp;  -i,--stdin               Pipe events to command
+									<br /> &nbsp;&nbsp;  -p,--persist             Pipe events to persistent command
+									<br /> &nbsp;&nbsp;  DIRECTORY                Directory to monitor
+								</small>
+							</code>
+						</div>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1> Controlling </h1>
+						<h1> Processes </h1>
+					</section>
+					<section>
+						<h2>Blocking effectively with MVars</h2>
+            <pre class="fragment">
+              <code>
+          starter :: [String] -&gt; MVar () -&gt; MVar ProcessHandle -&gt; IO ()
+          starter args blocker running = do
+            putMVar blocker () -- ENSURE WE ARE READY TO ROLL
+            p &lt;- startProcess args
+            putMVar running p
+            code &lt;- waitForProcess p
+            case code of ExitFailure 15 -&gt; return () -- Killed!
+                         ExitFailure i  -&gt; putStrLn "DOH! [" ++ show i ++ "]"
+                         ExitSuccess    -&gt; return ()
+              </code>
+            </pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2> Smooth Sailing? </h2>
+						<h3 class="fragment"> Not exactly... </h3>
+						<br />
 						<ul>
-							<li class="fragment"> Haskell 1.0 - 1.4 </li>
-							<li class="fragment"> Haskell 98 </li>
-							<li class="fragment"> Haskell Prime </li>
-							<li class="fragment"> Haskell 2010 </li>
+							<li class="fragment">Many issues with fsnotify <br />
+								<small class="fragment">... once I figured out which library was the right one ...</small></li>
+							<li class="fragment">Line buffering... <span class="fragment">FML</span> <br />
+								<small class="fragment"><code>commando -c echo | grep <span style="background:red;">--line-buffered</span> Add  | conscript ls</code></small><br />
+								<span class="fragment">Remember!!!</span></li>
+							<li class="fragment">No ideal interface to process-management <br />
+								<small class="fragment">Runtime errors when handle operations are performed on the wrong stream...</small></li>
 						</ul>
 					</section>
 					<section>
-						<h3>Or that a large number of people use features that fall outside of these specifications? </h3>
-						<br>
-						<p class="fragment">GHC has become the de-facto standard for Haskell use in the <q>Real&nbsp;World&#0153;</q></p>
-						<br>
-						<p class="fragment">Luckily for us, GHC has taken a structured approach to adding further functionality to its implementation of Haskell.</q></p>
-						<br>
-						<p class="fragment">This comes in the form of extensions.</q></p>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2> How do I even??  </h2>
-						<p><small> How do I enable &lt;Extension&gt;? </small></p>
-					</section>
-					<section>
-						<h3> With GHC Parameters... </h3>
-						<p><code>foo.hs</code></p>
-						<pre><code> ghc --make -XExtension foo.hs </code></pre>
-					</section>
-					<section>
-						<h3> In Your Source Files... </h3>
-						<p><code>foo.hs</code></p>
-						<pre><code class="haskell"> {-# LANGUAGE Extension #-} </code></pre>
-						<pre><code class="haskell"> {-# OPTIONS_GHC -XExtension #-} </code></pre>
-					</section>
-					<section>
-						<h3> With Cabal... </h3>
-						<p><code>foo.cabal</code></p>
-						<pre><code> Extensions:  Extension </code></pre>
-						<pre><code> Ghc-Options: -fextension </code></pre>
-					</section>
-				</section>
-
-				<section>
-					<h2> Extensions Covered </h2>
-
-					<ul>
-						<li><code>ImplicitParams           </code></li>
-						<li><code>ViewPatterns             </code></li>
-						<li><code>OverloadedStrings        </code></li>
-						<li><code>MonadComprehensions      </code></li>
-						<li><code>EmptyDataDecls           </code></li>
-						<li><code>MultiParameterTypeClasses</code></li>
-						<li><code>GADTs                    </code></li>
-						<li><code>UnicodeSyntax            </code></li>
-					</ul>
-				</section>
-
-				<!-- Extension Sections -->
-
-				<section>
-					<h2> Implicit Parameters </h2>
-					<p> <small> <a href="http://www.haskell.org/ghc/docs/latest/html/users_guide/other-type-extensions.html#implicit-parameters"> http://www.haskell.org/ghc/docs/latest/html/users_guide/other-type-extensions.html#implicit-parameters </a> </small> </p>
-					<script src="http://gist.github.com/sordina/5676863.js" type="text/javascript"></script>
-					<p>Turn it on &#8594; <code> ImplicitParams </code></p>
-				</section>
-
-				<section>
-					<h2> View Patterns </h2>
-					<p> <small> <a href="http://hackage.haskell.org/trac/ghc/wiki/ViewPatterns"> http://hackage.haskell.org/trac/ghc/wiki/ViewPatterns </a> </small> </p>
-					<script src="http://gist.github.com/sordina/5352278.js" type="text/javascript"></script>
-					<p>Turn it on &#8594; <code> ViewPatterns </code></p>
-				</section>
-
-				<section>
-					<h2> Overloaded Strings </h2>
-					<p> <small> <a href="http://www.haskell.org/ghc/docs/7.0.1/html/users_guide/type-class-extensions.html#overloaded-strings"> http://www.haskell.org/ghc/docs/7.0.1/html/users_guide/type-class-extensions.html#overloaded-strings </a> </small> </p>
-					<script src="http://gist.github.com/sordina/5714390.js" type="text/javascript"></script>
-					<p>Turn it on &#8594; <code> OverloadedStrings </code></p>
-				</section>
-
-				<section>
-					<section>
-						<h2> Monad Comprehensions </h2>
-						<p> <small> <a href="http://hackage.haskell.org/trac/ghc/wiki/MonadComprehensions"> http://hackage.haskell.org/trac/ghc/wiki/MonadComprehensions </a> </small> </p>
-						<script src="http://gist.github.com/sordina/5714471.js" type="text/javascript"></script>
-						<p>Turn it on &#8594; <code> MonadComprehensions </code></p>
-					</section>
-					<section>
-						<h3>Generalises Various Concepts</h3>
-						<p>Such as...</p>
-						<br>
+						<h2> TODO </h2>
+						<h3 class="fragment"> More Options! </h3>
+						<br />
 						<ul>
-							<li> <a
-								href="http://www.haskell.org/ghc/docs/7.2.1/html/users_guide/syntax-extns.html#parallel-list-comprehensions">
-								Parallel Comprehensions </a> (ParallelListComp)</li>
-							<li> <a
-								href="http://www.haskell.org/ghc/docs/7.2.1/html/users_guide/syntax-extns.html#generalised-list-comprehensions">
-								Transform Comprehensions </a> (SQL-Like Order and Group) </li>
+							<li class="fragment"> Only emit certain events </li>
+							<li class="fragment"> Determine what to spawn using input</li>
 						</ul>
 					</section>
 					<section>
-						<h3> Parallel List Comprehensions </h3>
-						<p> <small> <a href="http://www.haskell.org/ghc/docs/5.00/set/parallel-list-comprehensions.html"> http://www.haskell.org/ghc/docs/5.00/set/parallel-list-comprehensions.html </a> </small> </p>
-						<script src="http://gist.github.com/sordina/5714594.js" type="text/javascript"></script>
-						<p>Turn it on &#8594; <code> ParallelListComp </code></p>
-					</section>
-				</section>
-
-				<section>
-					<h2> Empty Data Declarations </h2>
-					<p> <small> <a href="http://hackage.haskell.org/trac/haskell-prime/wiki/EmptyDataDecls"> http://hackage.haskell.org/trac/haskell-prime/wiki/EmptyDataDecls </a> </small> </p>
-					<script src="http://gist.github.com/sordina/5714750.js" type="text/javascript"></script>
-					<p>Turn it on &#8594; <code> EmptyDataDecls </code></p>
-					<br>
-					<p><small>Not terribly exciting, but turned on automatically when you use...</small></p>
-				</section>
-
-				<section>
-					<section>
-						<h2> Multi Parameter Type Classes </h2>
-						<p> <small> <a href="http://www.haskell.org/ghc/docs/7.0.1/html/users_guide/type-class-extensions.html#id3172593"> http://www.haskell.org/ghc/docs/7.0.1/html/users_guide/type-class-extensions.html#id3172593 </a> </small> </p>
-						<script src="http://gist.github.com/sordina/5714668.js" type="text/javascript"></script>
-						<p>Turn it on &#8594; <code> MultiParamTypeClasses </code></p>
+						<h2> TODO </h2>
+						<h3 class="fragment"> Fix Bugs! </h3>
+						<br />
+						<ul>
+							<li class="fragment"> Removal events seem to only show pre-existing files</li>
+							<li class="fragment"> Handle errors more noisily </li>
+						</ul>
 					</section>
 					<section>
-						<h3>Seems Simple Enough...</h3>
-						<br>
-						<p><small>But in actual fact, leads to the ability to write advanced type-level functions...</small></p>
-						<p><a href="http://byorgey.wordpress.com/2010/06/29/typed-type-level-programming-in-haskell-part-i-functional-dependencies/"> http://byorgey.wordpress.com/2010/06/29/ty ... nal-dependencies/ </a></p>
-						<br>
-						<p>And more...</p>
-						<p><a href="http://www.haskell.org/haskellwiki/GADTs_for_dummies"> http://www.haskell.org/haskellwiki/GADTs_for_dummies </a></p>
-						<br>
-						<br>
-						<p class="fragment"> Speaking of GADTs... </p>
+						<h2> TODO </h2>
+						<h3 class="fragment"> More Utilities! </h3>
+						<br />
+						<ul>
+							<li class="fragment"> Checksum utility to check for legit changes <span class="fragment">( Medic? )</span> </li>
+							<li class="fragment"> Throttle utility to discard spammed events <span class="fragment">( Sapper? )</span> </li>
+							<li class="fragment"> Handy composition of existing utilities <span class="fragment">( Admiral? )</span> </li>
+						</ul>
 					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2 style="font-size:180%;"> Generalised Algebraic Data Types </h2>
-						<p> <small> <a href="http://www.haskell.org/ghc/docs/7.0.3/html/users_guide/data-type-extensions.html#gadt"> http://www.haskell.org/ghc/docs/7.0.3/html/users_guide/data-type-extensions.html#gadt </a> </small> </p>
-						<p>Turn it on &#8594; <code> GADTs </code></p>
-						<p><small> Examples taken from
-							<a href="http://en.wikibooks.org/wiki/Haskell/GADT">http://en.wikibooks.org/wiki/Haskell/GADT</a> </small></p>
-					</section>
-					<section>
-						<h3>Let's Say...</h3>
-						<p> <small> You want to represent a small pure expression language in haskell: </small> </p>
-						<script src="http://gist.github.com/sordina/f5f851a34609030f8ca6.js" type="text/javascript"></script>
-						<p> You can create Integers, Add them, and Multiply them. </p>
-					</section>
-					<section>
-						<h3> And Now for Something Slightly Different</h3>
-						<p><small>We want to be able to compare values, and derive a boolean result:</small></p>
-						<script src="http://gist.github.com/sordina/30f04682180415906c99.js" type="text/javascript"></script>
-						<br>
-						<p>Oops, that doesn't work so well...</p>
-					</section>
-					<section>
-						<h3>With Enough Data-Types...</h3>
-						<p>We can make it work...</p>
-						<script src="http://gist.github.com/sordina/096704f20ea6fa1baf8a.js" type="text/javascript"></script>
-						<p class="fragment">But it sucks!</p>
-					</section>
-					<section>
-						<h3>Maybe if we...</h3>
-						<p><small>introduce a type parameter to keep track of our expression type...</small></p>
-						<script src="http://gist.github.com/sordina/d97997ba78ea6a384191.js" type="text/javascript"></script>
-					</section>
-					<section>
-						<h3>Finally, with GADTs</h3>
-						<script src="http://gist.github.com/sordina/0d23aed45fdc66a575ec.js" type="text/javascript"></script>
-						<p>Things are working, concise, and expressive</p>
-						<br>
-						<p class="fragment">This is just the tip of the iceberg when it comes to GADTs.</p>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Unicode Syntax ‽‽‽‽ </h2>
-						<p> <small> <a href="http://www.haskell.org/ghc/docs/7.4.1/html/users_guide/syntax-extns.html#unicode-syntax"> http://www.haskell.org/ghc/docs/7.4.1/html/users_guide/syntax-extns.html#unicode-syntax </a> </small> </p>
-						<script src="http://gist.github.com/sordina/5719975.js" type="text/javascript"></script>
-						<p>Turn it on &#8594; <code> UnicodeSyntax </code></p>
-					</section>
-					<section>
-						<h3> Can this be abused?  </h3>
-						<h1 class="fragment"> Heck Yes!! </h1>
-						<div class="fragment">
-							<p>Also...</p>
-							<p>With Haskell's weird distinction between operators and
-								 functions, this can get ugly...</p>
-						</div>
-					</section>
-					<section>
-						<h2>Like So:</h2>
-						<script src="http://gist.github.com/sordina/5813457.js" type="text/javascript"></script>
-						<br>
-						<br>
-						<h1 class="fragment"> :( </h1>
-					</section>
-				</section>
-
-				<!--
-				<section>
-					<h2 style="font-size:180%;"> Template Haskell </h2>
-					<p> <small> <a href="http://www.haskell.org/ghc/docs/7.0.2/html/users_guide/template-haskell.html"> http://www.haskell.org/ghc/docs/7.0.2/html/users_guide/template-haskell.html </a> </small> </p>
-					<p>Turn it on &#8594; <code> TemplateHaskell </code></p>
-				</section>
-				-->
-
-				<section>
-					<h2> Obviously this is just an overview... </h2>
-					<br>
-					<p> The best way to learn about GHC's extensions is to pick one and
-					    see what you can do with it. Experimentation is key! </p>
-					<br>
-					<h3 class="fragment"> Go and Play! </h3>
 				</section>
 
 				<section>
